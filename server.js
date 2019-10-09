@@ -21,6 +21,12 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
+const usersRouter = require('./routes/users');
+const tasksRouter = require('./routes/tasks');
+
+app.use('/users', usersRouter);
+app.use('/tasks', tasksRouter);
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
 
