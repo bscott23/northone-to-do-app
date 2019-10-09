@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const List = require('../models/task.model');
+const Task = require('../models/task.model');
 
 // VIEW ALL TASKS
 router.route('/').get((req, res) => {
