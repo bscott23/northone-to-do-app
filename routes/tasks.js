@@ -8,6 +8,13 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// VIEW SPECIFIC TASK
+router.route('/:id').get((req, res) => {
+  Task.findById(req.params.id)
+    .then(task => res.json(task))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 // ADD TASK TO LIST
 router.route('/add').post((req, res) => {
     const username = req.body.username;

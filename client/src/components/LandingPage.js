@@ -15,7 +15,7 @@ export default class LandingPage extends Component {
           Start crushin' tasks now by adding some to your Task List. 
         </p>
         <p class="lead">
-          <Link to="/addTasl" className="btn btn-primary btn-lg" role="button">Crush some tasks</Link>
+          <Link to="/addTask" className="btn btn-primary btn-lg" role="button">Crush some tasks</Link>
         </p>
       </Jumbotron>
     );

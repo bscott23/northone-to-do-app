@@ -4,11 +4,13 @@ import axios from "axios";
 
 const Task = props => (
   <tr>
+    <td>{props.task.username}</td>
     <td>{props.task.title}</td>
     <td>{props.task.description}</td>
     <td>{props.task.status}</td>
-    <td>{props.task.due_date}</td>
+    <td>{props.task.due_date.substring(0, 10)}</td>
     <td>
+      <Link to={"/editTask/" + props.task._id}>edit</Link> |{" "}
       <a
         href="#"
         onClick={() => {
@@ -30,7 +32,7 @@ export default class TaskList extends Component {
 
   componentDidMount() {
     axios
-      .get("/taskList/")
+      .get("http://localhost:5000/tasks/")
       .then(response => {
         this.setState({ tasks: response.data });
       })
@@ -65,6 +67,7 @@ export default class TaskList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
+              <th>Username</th>
               <th>Title</th>
               <th>Description</th>
               <th>Status</th>
