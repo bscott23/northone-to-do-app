@@ -26,7 +26,7 @@ export default class EditTask extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/tasks/" + this.props.match.params.id)
+      .get("/tasks/" + this.props.match.params.id)
       .then(response => {
         this.setState({
           username: response.data.username,
@@ -41,7 +41,7 @@ export default class EditTask extends Component {
       });
 
     axios
-      .get("http://localhost:5000/users/")
+      .get("/users/")
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -99,7 +99,7 @@ export default class EditTask extends Component {
 
     axios
       .post(
-        "http://localhost:5000/tasks/update/" + this.props.match.params.id,
+        "/tasks/update/" + this.props.match.params.id,
         task
       )
       .then(res => console.log(res.data));

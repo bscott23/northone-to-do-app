@@ -32,7 +32,7 @@ export default class TaskList extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/tasks/")
+      .get("/tasks/")
       .then(response => {
         this.setState({ tasks: response.data });
       })

@@ -26,7 +26,7 @@ export default class AddTask extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/users/")
+      .get("/users/")
       .then(response => {
         if (response.data.length > 0) {
           this.setState({
@@ -84,7 +84,7 @@ export default class AddTask extends Component {
     console.log(task);
 
     axios
-      .post("http://localhost:5000/tasks/add", task)
+      .post("/tasks/add", task)
       .then(res => console.log(res.data));
 
     window.location = "/taskList";
