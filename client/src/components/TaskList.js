@@ -42,7 +42,7 @@ export default class TaskList extends Component {
   }
 
   deleteTask(id) {
-    axios.delete("/taskList/" + id).then(res => console.log(res.data));
+    axios.delete("/tasks/" + id).then(res => console.log(res.data));
     this.setState({
       tasks: this.state.tasks.filter(el => el._id !== id)
     });
