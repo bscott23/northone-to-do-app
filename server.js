@@ -23,9 +23,11 @@ connection.once('open', () => {
 
 const usersRouter = require('./routes/users');
 const tasksRouter = require('./routes/tasks');
+const labelsRouter = require('./routes/labels');
 
 app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
+app.use('/labels', labelsRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
