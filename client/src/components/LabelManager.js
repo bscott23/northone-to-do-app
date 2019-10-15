@@ -43,7 +43,6 @@ export default class CreateLabelModal extends Component {
       .catch(error => {
         console.log(error);
       });
-    console.log("component mounted");
   }
 
   onChangeLabel(e) {

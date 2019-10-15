@@ -10,6 +10,7 @@ const Task = props => (
     <td>{props.task.title}</td>
     <td>{props.task.description}</td>
     <td>{props.task.status}</td>
+    <td>{props.task.labels}</td>
     <td>{props.task.due_date.substring(0, 10)}</td>
     <td>
       <Link to={"/editTask/" + props.task._id}>edit</Link> |{" "}
@@ -73,6 +74,7 @@ export default class TaskList extends Component {
               <th>Title</th>
               <th>Description</th>
               <th>Status</th>
+              <th>Labels</th>
               <th>Due Date</th>
               <th>Actions</th>
             </tr>

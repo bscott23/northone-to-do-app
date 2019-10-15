@@ -11,6 +11,7 @@ export default class AddTask extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.onChangeLabels = this.onChangeLabels.bind(this);
     this.onChangeDueDate = this.onChangeDueDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -19,25 +20,31 @@ export default class AddTask extends Component {
       title: "",
       description: "",
       status: "",
+      labels: [],
       dueDate: new Date(),
       users: []
     };
   }
 
   componentDidMount() {
-    axios
-      .get("/users/")
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            users: response.data.map(user => user.username),
-            username: response.data[0].username
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const fetchData = async () => {
+      try {
+        const usersResponse = await axios.get("/users/");
+        console.log(usersResponse);
+
+        const labelsResponse = await axios.get("/labels/");
+        console.log(labelsResponse);
+
+        this.setState({
+          users: usersResponse.data.map(user => user.username),
+          username: usersResponse.data[0].username,
+          labels: labelsResponse.data.map(label => label.label)
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    return fetchData();
   }
 
   onChangeUsername(e) {
@@ -64,10 +71,28 @@ export default class AddTask extends Component {
     });
   }
 
+  onChangeLabels(e) {
+    this.setState({
+      labels: e.target.value
+    });
+  }
+
   onChangeDueDate(date) {
     this.setState({
       dueDate: date
     });
+  }
+
+  listLabelOptions() {
+    const options = this.state.labels.map(currentLabel => {
+      return (
+        <option value={currentLabel} key={currentLabel._id}>
+          {currentLabel}
+        </option>
+      );
+    });
+
+    return options.join();
   }
 
   onSubmit(e) {
@@ -78,16 +103,15 @@ export default class AddTask extends Component {
       title: this.state.title,
       description: this.state.description,
       status: this.state.status,
+      labels: this.state.labels,
       due_date: this.state.dueDate
     };
 
     console.log(task);
 
-    axios
-      .post("/tasks/add", task)
-      .then(res => console.log(res.data));
+    axios.post("/tasks/add", task).then(res => console.log(res.data));
 
-    window.location = "/taskList";
+    //window.location = "/taskList";
   }
 
   render() {
@@ -144,6 +168,24 @@ export default class AddTask extends Component {
               <option value="Not Started">Not Started</option>
               <option value="In Progress">In Progress</option>
               <option value="Complete">Complete</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Labels: </label>
+            <select
+              ref="userInput"
+              optional
+              className="form-control"
+              value={this.state.labels}
+              onChange={this.onChangeLabels}
+            >
+              {this.state.labels.map(label => {
+                return (
+                  <option key={label} value={label}>
+                    {label}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-group">
