@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import LabelManager from "./LabelManager";
+
 const Task = props => (
   <tr>
     <td>{props.task.username}</td>
@@ -77,6 +79,7 @@ export default class TaskList extends Component {
           </thead>
           <tbody>{this.taskList()}</tbody>
         </table>
+        <LabelManager />
       </div>
     );
   }

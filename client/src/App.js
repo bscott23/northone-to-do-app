@@ -8,6 +8,7 @@ import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
 import CreateUser from "./components/CreateUser";
+import LabelManager from "./components/LabelManager";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/addTask" component={AddTask} />
         <Route path="/editTask/:id" component={EditTask} />
         <Route path="/user" component={CreateUser} />
+        <Route path="/label-manager" component={LabelManager} />
       </div>
     </Router>
   );
