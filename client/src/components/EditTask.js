@@ -3,6 +3,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import LabelManager from "./LabelManager";
+
 export default class EditTask extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +13,7 @@ export default class EditTask extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.onChangeLabels = this.onChangeLabels.bind(this);
     this.onChangeDueDate = this.onChangeDueDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -19,6 +22,7 @@ export default class EditTask extends Component {
       title: "",
       description: "",
       status: "",
+      labels: [],
       dueDate: new Date(),
       users: []
     };
@@ -33,6 +37,7 @@ export default class EditTask extends Component {
           title: response.data.title,
           description: response.data.description,
           status: response.data.status,
+          labels: response.data.labels,
           dueDate: new Date(response.data.due_date)
         });
       })
@@ -46,6 +51,19 @@ export default class EditTask extends Component {
         if (response.data.length > 0) {
           this.setState({
             users: response.data.map(user => user.username)
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+      axios
+      .get("/labels/")
+      .then(response => {
+        if (response.data.length > 0) {
+          this.setState({
+            labels: response.data.map(label => label.label)
           });
         }
       })
@@ -78,9 +96,25 @@ export default class EditTask extends Component {
     });
   }
 
+  onChangeLabels(e) {
+    this.setState({
+      labels: e.target.value
+    });
+  }
+
   onChangeDueDate(date) {
     this.setState({
       dueDate: date
+    });
+  }
+
+  listLabelOptions() {
+    const options = this.state.labels.map(currentLabel => {
+      return (
+        <option value={currentLabel} key={currentLabel._id}>
+          {currentLabel}
+        </option>
+      );
     });
   }
 
@@ -92,6 +126,7 @@ export default class EditTask extends Component {
       title: this.state.title,
       description: this.state.description,
       status: this.state.status,
+      labels: this.state.labels,
       due_date: this.state.dueDate
     };
 
@@ -164,6 +199,26 @@ export default class EditTask extends Component {
               <option value="Complete">Complete</option>
             </select>
           </div>
+          <div className="form-group">
+            <label>Labels: </label>
+            <select
+              ref="userInput"
+              optional
+              className="form-control"
+              value={this.state.labels}
+              onChange={this.onChangeLabels}
+            >
+              {this.state.labels.map(label => {
+                return (
+                  <option key={label} value={label}>
+                    {label}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <LabelManager />
+          <br />
           <div className="form-group">
             <label>Due Date: </label>
             <div>

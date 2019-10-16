@@ -3,6 +3,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import LabelManager from "./LabelManager";
+
 export default class AddTask extends Component {
   constructor(props) {
     super(props);
@@ -91,8 +93,6 @@ export default class AddTask extends Component {
         </option>
       );
     });
-
-    return options.join();
   }
 
   onSubmit(e) {
@@ -188,6 +188,8 @@ export default class AddTask extends Component {
               })}
             </select>
           </div>
+          <LabelManager />
+          <br />
           <div className="form-group">
             <label>Due Date: </label>
             <div>
