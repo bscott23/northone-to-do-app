@@ -86,8 +86,6 @@ export default class AddTask extends Component {
     axios
       .post("/tasks/add", task)
       .then(res => console.log(res.data));
-
-    window.location = "/taskList";
   }
 
   render() {

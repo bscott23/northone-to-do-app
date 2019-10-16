@@ -103,8 +103,6 @@ export default class EditTask extends Component {
         task
       )
       .then(res => console.log(res.data));
-
-    window.location = "/taskList";
   }
 
   render() {
